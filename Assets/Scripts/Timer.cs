@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -10,7 +11,7 @@ public class Timer : MonoBehaviour
 
     [Header("Timer Settings")]
     public float currentTime;
-    public bool countDown;
+    public bool pause;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +21,16 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
-       timerText.text = currentTime.ToString("0.00");
+    //    currentTime = countDown ? currentTime -= Time.deltaTime : currentTime += Time.deltaTime;
+        if (!pause) {
+            currentTime += Time.deltaTime;
+        }
+
+        timerText.text = currentTime.ToString("0.00");
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        timerText.color = Color.white;
-        // timerText.color 
+    public void TaskOnClick()
+    {
+        pause = true;
     }
 }
