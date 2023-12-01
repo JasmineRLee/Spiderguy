@@ -29,8 +29,13 @@ public class Timer : MonoBehaviour
         timerText.text = currentTime.ToString("0.00");
     }
 
-    public void TaskOnClick()
+    public void OnClickPause()
     {
         pause = true;
     }
+
+    public void onClickPlay() {
+        pause = false;
+    }
+
 }

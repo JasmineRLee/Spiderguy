@@ -7,7 +7,11 @@ public class MoveToMouse : MonoBehaviour
 public float speed = 5f;
 private Vector3 target;
 private bool keepMoving;
+
+private bool isPaused;
 private bool buttonHover;
+public AudioSource Spring;
+private SpriteRenderer ren;
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +22,17 @@ private bool buttonHover;
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && buttonHover == false)
+        if(Input.GetMouseButtonDown(0) && !buttonHover && !isPaused)
         {
             keepMoving = true;
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             target.z = transform.position.z;
         }
 
-        if (keepMoving == true){
+        if (keepMoving && !isPaused){
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -53,14 +58,26 @@ private bool buttonHover;
     }
 
     public void OnClickPause() {
-        keepMoving = false;
+        isPaused = true;
     }
 
-    // public void OnTriggerEnter (Collider coll)
-    // {
-    //     if(coll.tag == "player")
-    //     {
-    //     Application.LoadLevel("nameOfNextLevel");
-    //     }
-    // }
+    public void onClickPlay() {
+        isPaused = false;
+    }
+
+    public void OnTriggerEnter2D (Collider2D coll)
+    {   
+        
+        if(coll.gameObject.CompareTag("Flyguy")) {
+            ren = GetComponent<SpriteRenderer>();
+            ren.color = Color.white;
+            Spring.Play();
+            Destroy(coll.gameObject);
+            speed = 10f;
+        }
+
+        // if(coll.gameObject.CompareTag("doorButton")) {
+
+        // }
+    }
 }

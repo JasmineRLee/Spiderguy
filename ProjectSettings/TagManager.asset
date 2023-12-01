@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Birdguy
   - Flyguy
-  - ScoreTag
+  - doorButton
   layers:
   - Default
   - TransparentFX
